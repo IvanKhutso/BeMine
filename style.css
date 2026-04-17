@@ -11,17 +11,18 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
+
     background-image:
         radial-gradient(circle at 15% 85%, #ffb3c1 0%, transparent 40%),
         radial-gradient(circle at 85% 15%, #ff8fa3 0%, transparent 40%),
         radial-gradient(circle at 50% 50%, #fff0f3 0%, transparent 60%);
 }
 
-/* Floating hearts background */
+/* Floating hearts */
 .hearts-bg {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    inset: 0;
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
@@ -31,7 +32,7 @@ body {
 .hearts-bg::after {
     content: '💕 💗 💖 💝 💓';
     position: absolute;
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 2vw, 1.5rem);
     opacity: 0.15;
     animation: floatHearts 12s linear infinite;
     white-space: nowrap;
@@ -50,15 +51,19 @@ body {
     to { transform: translateY(-110vh); opacity: 0; }
 }
 
+/* Container */
 .container {
     position: relative;
     z-index: 1;
     text-align: center;
-    padding: 40px 20px;
+    padding: clamp(20px, 5vw, 40px);
+    max-width: 900px;
+    width: 100%;
 }
 
+/* Heading */
 h1 {
-    font-size: 2.4rem;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
     color: #d63384;
     font-weight: 900;
     margin-bottom: 20px;
@@ -71,6 +76,7 @@ h1 {
     50% { transform: rotate(1deg); }
 }
 
+/* GIF */
 .gif-container {
     margin: 20px auto;
     display: flex;
@@ -78,75 +84,61 @@ h1 {
 }
 
 #cat-gif {
-    width: 200px;
-    height: 200px;
+    width: clamp(140px, 40vw, 220px);
+    height: clamp(140px, 40vw, 220px);
     object-fit: contain;
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
-    transition: opacity 0.3s ease;
 }
 
+/* Buttons */
 .buttons {
     display: flex;
-    gap: 20px;
+    gap: clamp(10px, 3vw, 20px);
     justify-content: center;
     align-items: center;
     margin-top: 30px;
     flex-wrap: wrap;
 }
 
+/* YES button */
 #yes-btn {
     background: linear-gradient(135deg, #4CAF50, #45a049);
     color: white;
     border: none;
     border-radius: 16px;
-    font-size: 1.6rem;
+    font-size: clamp(1rem, 4vw, 1.5rem);
     font-weight: 900;
-    font-family: 'Nunito', sans-serif;
-    padding: 18px 45px;
+    padding: clamp(12px, 3vw, 18px) clamp(25px, 6vw, 45px);
     cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
     box-shadow: 0 6px 20px rgba(76, 175, 80, 0.45);
-    letter-spacing: 1px;
 }
 
 #yes-btn:hover {
-    transform: scale(1.06) translateY(-2px);
-    box-shadow: 0 10px 28px rgba(76, 175, 80, 0.55);
+    transform: scale(1.05);
 }
 
-#yes-btn:active {
-    transform: scale(0.98);
-}
-
+/* NO button */
 #no-btn {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
     color: white;
     border: none;
     border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 700;
-    font-family: 'Nunito', sans-serif;
-    padding: 12px 28px;
+    font-size: clamp(0.8rem, 3vw, 1rem);
+    padding: clamp(8px, 2vw, 12px) clamp(16px, 4vw, 28px);
     cursor: pointer;
-    transition: background 0.2s, left 0.25s ease, top 0.25s ease;
-    box-shadow: 0 4px 14px rgba(231, 76, 60, 0.4);
 }
 
-#no-btn:hover {
-    background: linear-gradient(135deg, #c0392b, #a93226);
-}
-
-
+/* Toast */
 #tease-toast {
     margin-top: 14px;
-    font-size: 1rem;
+    font-size: clamp(0.8rem, 3vw, 1rem);
     color: #d63384;
     font-weight: 700;
     font-style: italic;
     opacity: 0;
     transform: translateY(6px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    min-height: 1.5rem;
+    transition: 0.3s;
 }
 
 #tease-toast.show {
@@ -154,53 +146,48 @@ h1 {
     transform: translateY(0);
 }
 
-/* Music toggle button */
+/* Music button */
 #music-toggle {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.85);
-    border: none;
+    bottom: 16px;
+    right: 16px;
+    width: clamp(42px, 10vw, 52px);
+    height: clamp(42px, 10vw, 52px);
+    font-size: clamp(1rem, 4vw, 1.4rem);
     border-radius: 50%;
-    width: 52px;
-    height: 52px;
-    font-size: 1.4rem;
-    cursor: pointer;
+    border: none;
+    background: rgba(255,255,255,0.85);
     backdrop-filter: blur(10px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transition: transform 0.2s;
-    z-index: 100;
 }
 
-#music-toggle:hover {
-    transform: scale(1.1);
-}
-
-/* Yes page specific */
+/* YES PAGE */
 .yes-container h1.yes-title {
-    font-size: 2.8rem;
-    animation: bounceTitle 0.6s ease infinite alternate;
-}
-
-@keyframes bounceTitle {
-    from { transform: translateY(0) rotate(-1deg); }
-    to { transform: translateY(-12px) rotate(1deg); }
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
 }
 
 .yes-message {
-    font-size: 1.4rem;
-    color: #e91e8c;
-    font-weight: 700;
-    margin-top: 24px;
-    animation: fadeIn 1s ease 0.5s both;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    font-size: clamp(1rem, 4vw, 1.4rem);
 }
 
 .yes-container #cat-gif {
-    width: 260px;
-    height: 260px;
+    width: clamp(180px, 50vw, 260px);
+    height: clamp(180px, 50vw, 260px);
+}
+
+/* 📱 EXTRA SMALL DEVICES */
+@media (max-width: 400px) {
+    .buttons {
+        flex-direction: column;
+    }
+
+    #yes-btn, #no-btn {
+        width: 100%;
+    }
+}
+
+/* 💻 LARGE SCREENS */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1000px;
+    }
 }
